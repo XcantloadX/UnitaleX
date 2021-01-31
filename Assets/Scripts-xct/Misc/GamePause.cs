@@ -112,6 +112,7 @@ public class GamePause : MonoBehaviour {
         //退出之前记得把 timeScale 改回去！
         Time.timeScale = timeScaleBak;
         StaticInits.Reset();
+        SceneSystem.UnloadCurrent();
         SceneSystem.Load(SceneSystem.START_MENU);
     }
 

@@ -66,5 +66,13 @@ public class StaticInits : MonoBehaviour
         Initialized = false;
         LuaScriptBinder.Clear();
         PlayerCharacter.Reset();
+
+        //防止内存泄露
+        
+        SpriteRegistry.Clear();
+        AudioClipRegistry.Clear();
+        ScriptRegistry.Clear();
+        Resources.UnloadUnusedAssets();
+        System.GC.Collect();
     }
 }

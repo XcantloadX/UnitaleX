@@ -52,4 +52,26 @@ public static class SpriteRegistry
         }
     }
 
+    
+    public static void Clear()
+    {
+        Sprite[] sprites = new Sprite[dict.Count];
+        dict.Values.CopyTo(sprites, 0);
+
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            try
+            {
+                //Resources.UnloadAsset(sprites[i]);
+                sprites[i] = null;
+            }
+            catch
+            {
+                Debug.Log(111);
+            }
+        }
+
+        dict.Clear();
+    }
+
 }

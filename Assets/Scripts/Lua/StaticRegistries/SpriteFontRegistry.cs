@@ -100,7 +100,10 @@ public static class SpriteFontRegistry
 
     private static Dictionary<char, Sprite> loadBuiltinFont(XmlNode sheetNode, string fontPath)
     {
-        Sprite[] letterSprites = SpriteUtil.atlasFromXml(sheetNode, SpriteUtil.fromFile(fontPath));
+        //TODO 潜在的内存泄露
+        Sprite source = SpriteUtil.fromFile(fontPath);
+        Sprite[] letterSprites = SpriteUtil.atlasFromXml(sheetNode, source);
+        Resources.UnloadAsset(source);
         Dictionary<char, Sprite> letters = new Dictionary<char, Sprite>();
         foreach (Sprite s in letterSprites)
         {

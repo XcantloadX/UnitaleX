@@ -62,4 +62,18 @@ public class AudioClipRegistry
             Set(voiceName, FileLoader.getAudioClip(directoryPath, file.FullName));
         }
     }
+
+    public static void Clear()
+    {
+        AudioClip[] clips = new AudioClip[dict.Count];
+        dict.Values.CopyTo(clips, 0);
+
+        for (int i = 0; i < clips.Length; i++)
+        {
+            //Resources.UnloadAsset(clips[i]);
+            clips[i].UnloadAudioData();
+        }
+
+        dict.Clear();
+    }
 }

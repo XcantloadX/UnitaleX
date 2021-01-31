@@ -61,6 +61,11 @@ public class SceneSystem : MonoBehaviour
         SceneManager.LoadScene(name);
     }
 
+    public static void UnloadCurrent()
+    {
+        SceneManager.UnloadSceneAsync(CurrentSceneName);
+    }
+
     private void RunCoroutine(IEnumerator enumerator)
     {
         base.StartCoroutine(enumerator);

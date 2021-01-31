@@ -6,7 +6,7 @@ public class AndroidUtil
 {
     public static void Toast(string text)
     {
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
         AndroidJavaClass UnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject currentActivity = UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity"); ;
         AndroidJavaClass Toast = new AndroidJavaClass("android.widget.Toast");

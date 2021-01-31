@@ -31,6 +31,11 @@ public class DebugCheating : MonoBehaviour {
             player = GameObject.FindObjectOfType<PlayerController>();
             enemy = GameObject.FindObjectOfType<EnemyController>();
         }
+        else
+        {
+            player = null;
+            enemy = null;
+        }
         
     }
 

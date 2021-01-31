@@ -50,4 +50,9 @@ public class ScriptRegistry
             Set(script_prefix + scriptName, FileLoader.getTextFrom(file.FullName));
         }
     }
+
+    public static void Clear()
+    {
+        dict.Clear();
+    }
 }
