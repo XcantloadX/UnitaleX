@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 114163568838286296}
   - component: {fileID: 114957209837459150}
   m_Layer: 5
-  m_Name: Test
+  m_Name: NewModSelectBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

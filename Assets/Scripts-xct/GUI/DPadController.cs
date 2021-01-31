@@ -46,24 +46,20 @@ public class DPadController : MonoBehaviour {
 
 	void Start () 
     {
-
-#if UNITY_EDITOR
-        SetDisplay(displayInEditor);
-#else
-        //如果不是移动端，默认隐藏
-        if (!Application.isMobilePlatform)
-        {
-            SetDisplay(false);
-            return;
-        }
-#endif
-        displaying = buttons[0].gameObject.activeSelf;
+        GameObject.DontDestroyOnLoad(this);
 
         //初始化 wrapper
         inputWrapper = new InputWrapper(this);
         GlobalControls.SetInput(inputWrapper); //GlobalControls 里设置了才能生效
 
-        GameObject.DontDestroyOnLoad(this);
+        if (!GlobalStaic.useDPad)
+        {
+            SetDisplay(GlobalStaic.useDPad);
+            return;
+        }
+
+
+        displaying = buttons[0].gameObject.activeSelf;
 
         //遍历所有 DPad 按钮
         foreach (DPadButton btn in buttons)
@@ -71,6 +67,7 @@ public class DPadController : MonoBehaviour {
             btn.controller = this;
             buttonsDictionary.Add(btn.buttonType, btn);
         }
+
 	}
 	
 	void Update () 
@@ -96,6 +93,7 @@ public class DPadController : MonoBehaviour {
     /// </summary>
     public void SetDisplay(bool display)
     {
+        GlobalStaic.useDPad = display;
         this.displaying = display;
 
         foreach (DPadButton btn in buttons)

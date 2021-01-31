@@ -103,7 +103,7 @@ public class ModSelector : MonoBehaviour
         RectTransform rect = obj.GetComponent<RectTransform>();
         rect.anchoredPosition = new Vector2(0, -y);
         //TODO 自适应文本框
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 500);
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 700);
         y += rect.rect.height + 10f;
         //很奇怪，scale 会自己变
         rect.localScale = Vector2.one;

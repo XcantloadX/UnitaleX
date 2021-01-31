@@ -12,9 +12,9 @@ public class DragableUI : MonoBehaviour, IDragHandler {
     {
         trans = gameObject.GetComponent<RectTransform>();
     }
-	
-	
-	void Update ()
+
+
+    void Update()
     {
 
 	}

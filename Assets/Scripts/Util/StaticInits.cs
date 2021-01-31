@@ -14,6 +14,8 @@ public class StaticInits : MonoBehaviour
     public static bool Initialized { get; private set; }
     public static StaticInits Instance { get; private set; }
 
+    
+
     private void Awake()
     {
         if (MODFOLDER == null || MODFOLDER == "")

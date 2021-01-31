@@ -15,15 +15,6 @@ public class AutoInstallBtn : MonoBehaviour {
 #endif
 
     private string MOD_PATH { get { return FileLoader.DataRoot + FILE_PATH_CHAR + "Mods"; } }
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void OnClick()
     {
@@ -59,16 +50,7 @@ public class AutoInstallBtn : MonoBehaviour {
             unzipped = true;
         }
         else if (ext == ".rar")
-        {
-#if UNITY_ANDROID
             throw new Exception("Rar 尚不支持!");
-            File.WriteAllBytes(tempFileName, data); //写到临时文件
-            UnRarPlugin.UnRar(tempFileName, unzippedPath); //解压
-            unzipped = true;
-#elif UNITY_WINDOWS
-            throw new Exception("Rar is not supported on Windows!");
-#endif
-        }
         else
             throw new Exception("尚不支持的压缩文件格式：" + ext);
 

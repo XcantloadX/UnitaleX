@@ -14,6 +14,7 @@ public class SceneSystem : MonoBehaviour
     public const string MOD_SELECT = "ModSelect";
     public const string DATA_DOWNLOADING = "Download";
     public const string LUA_ERROR = "Error";
+    public const string GAME_OVER = "GameOver";
 
     /// <summary>
     /// 当前激活 Scene 的名字

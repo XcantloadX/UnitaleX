@@ -17,8 +17,8 @@ public class DebugCheating : MonoBehaviour {
         player = GameObject.FindObjectOfType<PlayerController>();
         if(Cheating)
         {
-            DebugInfoScreen.instance.AddNewLine("CHEATING", true);
-            DebugInfoScreen.instance.EditLine("CHEATING", true);
+            DebugInfoScreen.instance.AddNewLine("NoHit", true);
+            GlobalStaic.noHit = true;
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
 	}
@@ -35,9 +35,14 @@ public class DebugCheating : MonoBehaviour {
     }
 
 	void Update () {
-        if (Cheating && player != null)
-            player.setHP(PlayerCharacter.MaxHP);
-        if (KillMonsterAtOnce && enemy != null && enemy.HP > 1)
-            enemy.HP = 1;
+        //if (Cheating && player != null)
+        //    player.setHP(PlayerCharacter.MaxHP);
+        //if (KillMonsterAtOnce && enemy != null && enemy.HP > 1)
+        //    enemy.HP = 1;
 	}
+
+    private void Inject()
+    {
+
+    }
 }

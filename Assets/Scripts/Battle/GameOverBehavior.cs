@@ -115,7 +115,7 @@ public class GameOverBehavior : MonoBehaviour {
 
         for (int i = 0; i < heartShardInstances.Length; i++)
         {
-            heartShardInstances[i].position += (Vector3)heartShardRelocs[i]*Time.deltaTime;
+            heartShardInstances[i].position += (Vector3)heartShardRelocs[i] * Time.deltaTime * 3;
             heartShardRelocs[i].y -= 100f * Time.deltaTime;
         }
 

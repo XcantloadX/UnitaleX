@@ -44,6 +44,9 @@ public class GlobalControls : MonoBehaviour
                 case SceneSystem.MOD_SELECT:
                     SceneSystem.Load(SceneSystem.START_MENU);
                     break;
+                case SceneSystem.GAME_OVER:
+                    SceneSystem.Load(SceneSystem.MOD_SELECT);
+                    break;
                 default:
                     break;
             }
