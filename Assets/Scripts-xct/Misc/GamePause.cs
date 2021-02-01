@@ -20,7 +20,7 @@ public class GamePause : MonoBehaviour {
 
     public GameObject pauseScreen; //暂停提示屏幕
     public RawImage background; //游戏截图背景
-
+    public Text modName; //mod 名称显示
 
 	void Start () {
         audioSource = GameObject.FindObjectsOfType<AudioSource>();
@@ -59,11 +59,14 @@ public class GamePause : MonoBehaviour {
             t.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
             t.Apply();
 
-            //开启暂停屏幕
+            //-----开启暂停屏幕-----
+            modName.text = StaticInits.MODFOLDER;
+
             //TODO 完善背景图功能
             pauseScreen.gameObject.SetActive(true);
             /*background.gameObject.SetActive(true); 
             background.texture = t;*/
+
             //调整背景图位置
             background.rectTransform.position = WorldToUIPosition(uiCanvas, Camera.main, gameCanvas.transform.position);
             background.rectTransform.sizeDelta = gameCanvas.GetComponent<RectTransform>().sizeDelta;

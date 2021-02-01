@@ -8,13 +8,9 @@ using System;
 public class AutoInstallBtn : MonoBehaviour {
 
     //文件路径分隔符
-#if UNITY_EDITOR || UNITY_WINDOWS
-    private const string FILE_PATH_CHAR = "\\";
-#elif UNITY_ANDROID
     private const string FILE_PATH_CHAR = "/";
-#endif
 
-    private string MOD_PATH { get { return FileLoader.DataRoot + FILE_PATH_CHAR + "Mods"; } }
+    private string MOD_PATH { get { return FileLoader.DataRoot + AutoInstallBtn.FILE_PATH_CHAR + "Mods"; } }
 
     public void OnClick()
     {

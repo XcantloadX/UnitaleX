@@ -42,6 +42,13 @@ public class FPSDisplay : MonoBehaviour
             timer = 0;
         }
 
+        if(fps < 10)
+            DebugInfoScreen.instance.EditLine("Fps", "<color=red>" + fps + " (May cause problem!)</color>");
+        else if(fps < 30)
+            DebugInfoScreen.instance.EditLine("Fps", "<color=yellow>" + fps + "</color>");
+        else
+            DebugInfoScreen.instance.EditLine("Fps", fps);
+
         DebugInfoScreen.instance.EditLine("Time", System.Math.Round(Time.time, 1));
     }
 }

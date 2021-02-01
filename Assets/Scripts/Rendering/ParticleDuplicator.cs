@@ -23,10 +23,13 @@ public class ParticleDuplicator : MonoBehaviour
 
         //Get sprite viewport coordinates and pixel width/height on display
         RectTransform rt = GetComponent<RectTransform>();
-        Vector2 bottomLeft = new Vector2((rt.position.x - rt.rect.width / 2) / (float)Screen.width, (rt.position.y) / (float)Screen.height);
-        Vector2 topRight = new Vector2((rt.position.x + rt.rect.width / 2) / (float)Screen.width, (rt.position.y + rt.rect.height) / (float)Screen.height);
-        Vector2 vpbl = Camera.main.ViewportToWorldPoint(bottomLeft);
-        Vector2 vptr = Camera.main.ViewportToWorldPoint(topRight);
+
+        //Canvas 已经改为了 World Space，没有转换的必要了
+        Vector2 bottomLeft = new Vector2((rt.position.x - rt.rect.width / 2), (rt.position.y));
+        Vector2 topRight = new Vector2((rt.position.x + rt.rect.width / 2), (rt.position.y + rt.rect.height));
+        Vector2 vpbl = bottomLeft;
+        Vector2 vptr = topRight;
+
         float pxWidth = (vptr.x - vpbl.x) / rt.rect.width;
         float pxHeight = (vptr.y - vpbl.y) / rt.rect.height;
 

@@ -70,7 +70,6 @@ public class AudioClipRegistry
 
         for (int i = 0; i < clips.Length; i++)
         {
-            //Resources.UnloadAsset(clips[i]);
             clips[i].UnloadAudioData();
         }
 

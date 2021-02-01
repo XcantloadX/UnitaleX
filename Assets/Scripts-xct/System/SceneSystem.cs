@@ -61,6 +61,9 @@ public class SceneSystem : MonoBehaviour
         SceneManager.LoadScene(name);
     }
 
+    /// <summary>
+    /// 卸载当前 Scene
+    /// </summary>
     public static void UnloadCurrent()
     {
         SceneManager.UnloadSceneAsync(CurrentSceneName);

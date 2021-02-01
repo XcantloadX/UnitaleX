@@ -40,7 +40,6 @@ public class DebugInfoScreen : MonoBehaviour {
         
 	}
 	
-	// Update is called once per frame
 	void Update () 
     {
         if (Input.GetKeyDown(KeyCode.F3))
@@ -77,7 +76,7 @@ public class DebugInfoScreen : MonoBehaviour {
     }
 
     /// <summary>
-    /// 修改一条 Debug 信息的值，确保已经存在此条信息
+    /// 修改一条 Debug 信息的值，修改之前请确保已经存在此条信息
     /// </summary>
     /// <param name="name">名称</param>
     /// <param name="value">值</param>
@@ -87,6 +86,10 @@ public class DebugInfoScreen : MonoBehaviour {
         infos[name] = value;
     }
 
+    /// <summary>
+    /// 移除一条信息
+    /// </summary>
+    /// <param name="name">名称</param>
     public void RemoveLine(string name)
     {
         infos.Remove(name);

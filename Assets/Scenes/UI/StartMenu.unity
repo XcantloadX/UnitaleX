@@ -500,6 +500,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1942100561322688, guid: 0c2d525e60815ed44a950472531f1167, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0c2d525e60815ed44a950472531f1167, type: 2}
   m_IsPrefabParent: 0
@@ -1755,7 +1759,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cheating: 1
-  KillMonsterAtOnce: 0
 --- !u!1 &2120420344
 GameObject:
   m_ObjectHideFlags: 0
