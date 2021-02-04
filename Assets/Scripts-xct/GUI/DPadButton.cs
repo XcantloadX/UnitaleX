@@ -35,6 +35,8 @@ public class DPadButton : MonoBehaviour
 
     void Update()
     {
+        return;
+
         //如果为 PRESSED，开始计时
         if (buttonState == ButtonState.PRESSED)
         {
@@ -72,6 +74,7 @@ public class DPadButton : MonoBehaviour
     public void OnPressed()
     {
         buttonState = ButtonState.PRESSED;
+        StartCoroutine(ButtonPressed());
 #if UNITY_ANDROID || UNITY_IOS
         controller.Vibrate();
 #endif
@@ -82,7 +85,23 @@ public class DPadButton : MonoBehaviour
     public void OnReleased()
     {
         buttonState = ButtonState.RELEASED;
+        StartCoroutine(ButtonReleased());
         //Debug.Log("按键释放");
     }
 
+    private IEnumerator ButtonPressed()
+    {
+        buttonState = ButtonState.PRESSED;
+        yield return 0;
+        if(buttonState == ButtonState.PRESSED) //一帧后仍然是按着的话
+            buttonState = ButtonState.HELD;
+    }
+
+    private IEnumerator ButtonReleased()
+    {
+        buttonState = ButtonState.RELEASED;
+        yield return 0;
+        if (buttonState == ButtonState.RELEASED) //一帧后仍然是放开的话
+            buttonState = ButtonState.NONE;
+    }
 }

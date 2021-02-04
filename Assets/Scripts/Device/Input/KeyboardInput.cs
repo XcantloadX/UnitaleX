@@ -8,11 +8,16 @@ using System.Collections.Generic;
 public class KeyboardInput : UndertaleInput {
     KeyCode KC_CONFIRM = KeyCode.Z;
     KeyCode KC_CONFIRM_ALT = KeyCode.Return;
+    KeyCode KC_CONFIRM_ALT2 = KeyCode.KeypadEnter;
+    KeyCode KC_CONFIRM_ALT3 = (KeyCode)10; //注：这是 Android 上回车的 KeyCode（TMD Unity 文档居然没写！！）
+
     KeyCode KC_CANCEL = KeyCode.X;
     KeyCode KC_CANCEL_ALT = KeyCode.LeftShift;
     KeyCode KC_CANCEL_ALT2 = KeyCode.RightShift;
+
     KeyCode KC_MENU = KeyCode.C;
     KeyCode KC_MENU_ALT = KeyCode.LeftControl;
+
     KeyCode KC_UP = KeyCode.UpArrow;
     KeyCode KC_DOWN = KeyCode.DownArrow;
     KeyCode KC_LEFT = KeyCode.LeftArrow;
@@ -20,7 +25,7 @@ public class KeyboardInput : UndertaleInput {
 
     public override UndertaleInput.ButtonState Confirm
     {
-        get { return stateFor(KC_CONFIRM, KC_CONFIRM_ALT); }
+        get { return stateFor(KC_CONFIRM, KC_CONFIRM_ALT, KC_CONFIRM_ALT2, KC_CONFIRM_ALT3); }
     }
 
     public override UndertaleInput.ButtonState Cancel

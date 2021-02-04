@@ -60,15 +60,7 @@ public static class SpriteRegistry
 
         for (int i = 0; i < sprites.Length; i++)
         {
-            try
-            {
-                //Resources.UnloadAsset(sprites[i]);
-                sprites[i] = null;
-            }
-            catch
-            {
-                Debug.Log(111);
-            }
+            sprites[i] = null;
         }
 
         dict.Clear();

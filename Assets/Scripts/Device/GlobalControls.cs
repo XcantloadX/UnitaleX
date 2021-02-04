@@ -24,6 +24,7 @@ public class GlobalControls : MonoBehaviour
     /// Control checking.
     /// </summary>
     void Update() {
+
         if (Input.GetKeyDown(KeyCode.F4))
         {
             Screen.fullScreen = !Screen.fullScreen;

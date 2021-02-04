@@ -4657,8 +4657,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78442f37a69919a409f51348d2557607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EDITOR_MODFOLDER: SpriteOutSideCanvas
-  EDITOR_ENCOUNTER: MAIN
+  EDITOR_MODFOLDER: DEBUG
+  EDITOR_ENCOUNTER: 1HP
 --- !u!114 &1727881053
 MonoBehaviour:
   m_ObjectHideFlags: 0

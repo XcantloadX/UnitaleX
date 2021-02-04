@@ -8,11 +8,8 @@ using System;
 public class InstallFromZipBtn : MonoBehaviour {
 
     public InputField input;
-#if UNITY_EDITOR || UNITY_WINDOWS
-    private const string FILE_PATH_CHAR = "\\";
-#elif UNITY_ANDROID
-    private const string FILE_PATH_CHAR = "/";
-#endif
+
+    private char FILE_PATH_CHAR = Path.DirectorySeparatorChar;
 
     public void OnClick()
     {

@@ -6,15 +6,23 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// 锁血
 /// </summary>
-public class DebugCheating : MonoBehaviour {
-
+public class DebugCheating : MonoBehaviour
+{
     public bool Cheating;
-	void Start () {
-        if(Cheating)
+
+    void Start()
+    {
+        DebugInfoScreen.instance.AddNewLine("Hits", 0);
+        if (Cheating)
         {
             DebugInfoScreen.instance.AddNewLine("NoHit", true);
             GlobalStaic.noHit = true;
         }
-	}
-	
+    }
+
+    void Update()
+    {
+        DebugInfoScreen.instance.EditLine("Hits", GlobalStaic.hits + " (= -" + GlobalStaic.totalHurtHP + " HP)");
+    }
+
 }

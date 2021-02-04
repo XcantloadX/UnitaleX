@@ -164,7 +164,7 @@ public class UButton : MonoBehaviour{
         AudioSystem.PlaySound(move);
         SetColor(pressedColor);
 
-#if UNITY_WINDOWS || UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR
         text.text = "> " + originText + " <";
 #endif
         

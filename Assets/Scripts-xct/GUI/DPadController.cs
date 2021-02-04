@@ -52,13 +52,6 @@ public class DPadController : MonoBehaviour {
         inputWrapper = new InputWrapper(this);
         GlobalControls.SetInput(inputWrapper); //GlobalControls 里设置了才能生效
 
-        if (!GlobalStaic.useDPad)
-        {
-            SetDisplay(GlobalStaic.useDPad);
-            return;
-        }
-
-
         displaying = buttons[0].gameObject.activeSelf;
 
         //遍历所有 DPad 按钮
@@ -68,6 +61,12 @@ public class DPadController : MonoBehaviour {
             buttonsDictionary.Add(btn.buttonType, btn);
         }
 
+
+        if (!GlobalStaic.useDPad)
+        {
+            SetDisplay(GlobalStaic.useDPad);
+            return;
+        }
 	}
 	
 	void Update () 
@@ -98,6 +97,7 @@ public class DPadController : MonoBehaviour {
 
         foreach (DPadButton btn in buttons)
         {
+            btn.controller = this; //很奇怪，这个有时会自己掉
             btn.gameObject.SetActive(display);
         }
 

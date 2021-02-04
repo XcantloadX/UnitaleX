@@ -115,6 +115,7 @@ public class GamePause : MonoBehaviour {
         //退出之前记得把 timeScale 改回去！
         Time.timeScale = timeScaleBak;
         StaticInits.Reset();
+        GlobalStaic.RestInBattleStats();
         SceneSystem.UnloadCurrent();
         SceneSystem.Load(SceneSystem.START_MENU);
     }

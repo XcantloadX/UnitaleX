@@ -126,8 +126,12 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     public virtual void Hurt(int damage = 3, float invulnerabilitySeconds = 1.7f)
     {
-        if (GlobalStaic.noHit)
+        if (GlobalStaic.noHit && damage > 0)
+        {
+            GlobalStaic.hits++;
+            GlobalStaic.totalHurtHP += damage;
             return;
+        }
         
 
         // set timer and play the hurt sound if player was actually hurt
@@ -153,6 +157,13 @@ public class PlayerController : MonoBehaviour
 
     public void setHP(int newhp)
     {
+        //统计
+        if(newhp < HP)
+        {
+            GlobalStaic.hits++;
+            GlobalStaic.totalHurtHP += Math.Abs(HP - newhp);
+        }
+
         if (newhp == HP || (GlobalStaic.noHit && newhp < HP)) //避免不必要的 UI 更新
             return;
 
