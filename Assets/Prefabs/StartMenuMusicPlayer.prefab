@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4407906603340450}
   - component: {fileID: 114474304850434316}
   m_Layer: 0
-  m_Name: Start Menu Musicer
+  m_Name: StartMenuMusicPlayer
   m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: 3c6724550fa86eb4d94a01ce1ed59215, type: 3}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -54,3 +54,4 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: c8e0949420a40e74694b400380232bcc, type: 3}
   loop: 1
   resetWhilePlaying: 0
+  stopOnDestory: 1

@@ -22,10 +22,11 @@ public class GlobalObject : MonoBehaviour
         if (inited)
             Destroy(gameObject);
         inited = true;
+
+        gameObject.AddComponent<GlobalSettings>();
         GameObject.DontDestroyOnLoad(this);
 
-        //屏幕常亮
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        SceneSystem.Init();
 	}
 	
 	// Update is called once per frame
@@ -34,6 +35,7 @@ public class GlobalObject : MonoBehaviour
 #if UNITY_ANDROID || UNITY_IOS
         DoubleClickExit();
 #endif
+
 	}
 
     //双击返回键退出

@@ -43,6 +43,7 @@ public class GlobalControls : MonoBehaviour
                     StaticInits.Reset();
                     break;
                 case SceneSystem.MOD_SELECT:
+                case SceneSystem.SETTINGS:
                     SceneSystem.Load(SceneSystem.START_MENU);
                     break;
                 case SceneSystem.GAME_OVER:

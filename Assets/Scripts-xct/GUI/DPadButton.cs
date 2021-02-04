@@ -25,7 +25,8 @@ public class DPadButton : MonoBehaviour
     private Rect rect;
     public DPadController controller;
     public DPadButtonType buttonType;
-    
+
+    private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
     void Start()
     {
@@ -78,7 +79,6 @@ public class DPadButton : MonoBehaviour
 #if UNITY_ANDROID || UNITY_IOS
         controller.Vibrate();
 #endif
-        //Debug.Log("按键按下");
     }
 
     //按钮放开事件
@@ -86,13 +86,12 @@ public class DPadButton : MonoBehaviour
     {
         buttonState = ButtonState.RELEASED;
         StartCoroutine(ButtonReleased());
-        //Debug.Log("按键释放");
     }
 
     private IEnumerator ButtonPressed()
     {
         buttonState = ButtonState.PRESSED;
-        yield return 0;
+        yield return waitForEndOfFrame;
         if(buttonState == ButtonState.PRESSED) //一帧后仍然是按着的话
             buttonState = ButtonState.HELD;
     }
@@ -100,7 +99,7 @@ public class DPadButton : MonoBehaviour
     private IEnumerator ButtonReleased()
     {
         buttonState = ButtonState.RELEASED;
-        yield return 0;
+        yield return waitForEndOfFrame;
         if (buttonState == ButtonState.RELEASED) //一帧后仍然是放开的话
             buttonState = ButtonState.NONE;
     }

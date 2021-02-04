@@ -79,7 +79,7 @@ public class GamePause : MonoBehaviour {
             gameCanvas.SetActive(false);
 
             dPadStateBak = dPad.displaying;
-            dPad.SetDisplay(false); //隐藏虚拟键盘
+            dPad.SetDisplayRaw(false); //隐藏虚拟键盘
         }
         else
         {
@@ -92,7 +92,7 @@ public class GamePause : MonoBehaviour {
             Time.timeScale = timeScaleBak;
 
             gameCanvas.SetActive(true);
-            dPad.SetDisplay(dPadStateBak);
+            dPad.SetDisplayRaw(dPadStateBak);
 
             for (int i = 0; i < audioSource.Length; i++)
             {
@@ -115,9 +115,9 @@ public class GamePause : MonoBehaviour {
         //退出之前记得把 timeScale 改回去！
         Time.timeScale = timeScaleBak;
         StaticInits.Reset();
-        GlobalStaic.RestInBattleStats();
-        SceneSystem.UnloadCurrent();
-        SceneSystem.Load(SceneSystem.START_MENU);
+        GlobalSettings.ins.RestInBattleStats();
+        //SceneSystem.UnloadCurrent();
+        SceneSystem.Load(SceneSystem.MOD_SELECT);
     }
 
     public void RestartBattle()

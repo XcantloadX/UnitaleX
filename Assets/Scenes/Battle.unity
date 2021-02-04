@@ -622,7 +622,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114681507989445970, guid: 0c2d525e60815ed44a950472531f1167, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 0c2d525e60815ed44a950472531f1167, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &264344424
@@ -3504,7 +3505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useVibrator: 1
   vibratingTime: 30
-  displayInEditor: 1
+  displayInEditor: 0
   buttons:
   - {fileID: 1723734323}
   - {fileID: 818322678}
@@ -4474,10 +4475,10 @@ GameObject:
   - component: {fileID: 1727881052}
   - component: {fileID: 1727881050}
   - component: {fileID: 1727881051}
-  - component: {fileID: 1727881053}
   - component: {fileID: 1727881054}
   - component: {fileID: 1727881055}
   - component: {fileID: 1727881056}
+  - component: {fileID: 1727881057}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4659,17 +4660,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EDITOR_MODFOLDER: DEBUG
   EDITOR_ENCOUNTER: 1HP
---- !u!114 &1727881053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1727881044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e994334232641bd4ca342c48fcdb1605, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1727881054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4706,6 +4696,17 @@ MonoBehaviour:
   pauseScreen: {fileID: 509544928}
   background: {fileID: 1031933226}
   modName: {fileID: 1013198005}
+--- !u!114 &1727881057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1727881044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0542085eb3bc81a48ad9b22dff2d548b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1740080478
 GameObject:
   m_ObjectHideFlags: 0
@@ -5523,6 +5524,21 @@ Prefab:
         type: 2}
       propertyPath: disabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114594885475643770, guid: 4bcdcef03faa4834abc89f5491f4b679,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1727881057}
+    - target: {fileID: 114594885475643770, guid: 4bcdcef03faa4834abc89f5491f4b679,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadSceneInAddition
+      objectReference: {fileID: 0}
+    - target: {fileID: 114594885475643770, guid: 4bcdcef03faa4834abc89f5491f4b679,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Settings
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4bcdcef03faa4834abc89f5491f4b679, type: 2}

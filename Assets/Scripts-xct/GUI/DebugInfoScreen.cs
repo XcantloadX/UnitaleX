@@ -9,17 +9,11 @@ using UnityEngine.UI;
 public class DebugInfoScreen : MonoBehaviour {
 
     public static DebugInfoScreen instance = null;
-    public bool showing = true;
     private List<string> lines = new List<string>(10);
     private Dictionary<string, object> infos = new Dictionary<string, object>(10);
     private GUIStyle style = new GUIStyle();
 
-    void Awake()
-    {
-
-    }
-
-	void Start () 
+	void Start()
     {
         if(instance != null) //保证单一实例
         {
@@ -37,19 +31,26 @@ public class DebugInfoScreen : MonoBehaviour {
         //t.SetPixel(0, 0, new Color(0, 0, 0, 10));
         //t.Apply();
         //style.normal.background = t;
+        CheckDebuggers();
         
 	}
+
+    private void CheckDebuggers()
+    {
+        if (GlobalSettings.settings.noHit)
+            DebugNoHit.Enable();
+    }
 	
 	void Update () 
     {
         if (Input.GetKeyDown(KeyCode.F3))
-            showing = !showing;
+            GlobalSettings.settings.debug = !GlobalSettings.settings.debug;
 
 	}
 
     void OnGUI()
     {
-        if (!showing)
+        if (!GlobalSettings.settings.debug)
             return;
         GUILayout.BeginArea(new Rect(0, 0, 400, Screen.height));
 

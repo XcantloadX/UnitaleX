@@ -72,7 +72,7 @@ public class USwitch : MonoBehaviour {
 	void Start ()
     {
         button = gameObject.GetComponent<UButton>();
-        button.PointerClicked += Clicked;
+        button.EventClicked += Clicked;
 
         this.UpdateText();
 	}
@@ -83,7 +83,7 @@ public class USwitch : MonoBehaviour {
         UpdateText();
     }
 
-    private void Clicked()
+    private void Clicked(UButton self)
     {
         current++;
         if (current >= texts.Length)
@@ -105,7 +105,7 @@ public class USwitch : MonoBehaviour {
     {
         if(button != null && (texts[current] != lastString))
         {
-            button.SetText(GetCurrentText());
+            button.DisplayText = (GetCurrentText());
             lastString = texts[current];
         }
             

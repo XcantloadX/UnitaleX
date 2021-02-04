@@ -17,6 +17,7 @@ public class ScreenResolution : MonoBehaviour
         }
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep; //屏幕常亮
 
         //强制设置分辨率会导致画面强制缩放，变得很模糊
         //因为现在改成了 World Canvas，所以用不着缩放

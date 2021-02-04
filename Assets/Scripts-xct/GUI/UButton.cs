@@ -13,7 +13,10 @@ public class UButton : MonoBehaviour{
     [Header("Button")]
     public bool disabled;
     public bool useKeyboard = false;
-    [SerializeField] private bool actived = false;
+    public string[] choices = new string[0];
+    public object[] values;
+    public int currectChoice = 0;
+    private bool actived = false;
 
     [Header("Text Color")]
     public Color pressedColor = Color.yellow;
@@ -44,15 +47,17 @@ public class UButton : MonoBehaviour{
 
         set
         {
-            SetText(value);
+            if (string.IsNullOrEmpty(value))
+                return;
+            text.text = value;
         }
     }
     private string originText;
 
     public RectTransform rect { get { return gameObject.GetComponent<RectTransform>(); } }
 
-    public delegate void clicked();
-    public event clicked PointerClicked;
+    public delegate void Clicked(UButton self);
+    public event Clicked EventClicked;
 
 	void Start ()
     {
@@ -84,8 +89,10 @@ public class UButton : MonoBehaviour{
             this.pressedColor = disabledColor;
         }
 
-        //this.UpdateText();
-        this.SetColor(normalColor); //更新按钮颜色
+        if (choices != null && choices.Length > 0)
+            DisplayText = choices[currectChoice];
+
+        this.SetColor(normalColor);
         originText = DisplayText;
     }
 
@@ -122,11 +129,7 @@ public class UButton : MonoBehaviour{
 
     }
 
-    /// <summary>
-    /// 添加事件触发器
-    /// </summary>
-    /// <param name="type">事件触发器类型</param>
-    /// <param name="callback">回调方法</param>
+    //添加事件触发器
     private void AddTrigger(EventTriggerType type, UnityAction<BaseEventData> callback)
     {
         EventTrigger.Entry entry = new EventTrigger.Entry();
@@ -137,21 +140,21 @@ public class UButton : MonoBehaviour{
         eventTrigger.triggers.Add(entry);
     }
 
-    //鼠标按下
+    //光标按下
     private void OnPointerDown(BaseEventData data)
     {
         if (this.disabled)
             return;
+
         SetColor(pressedColor);
         AudioSystem.PlaySound(confirm);
+        if(choices != null && choices.Length > 0)
+            DisplayText = GetModifiedText(choices[NextChoice()]);
     }
 
-    //鼠标放开
+    //光标放开
     private void OnPointerUp(BaseEventData data)
     {
-        if (this.disabled)
-            return;
-        SetColor(normalColor);
     }
 
     //光标进入
@@ -164,10 +167,7 @@ public class UButton : MonoBehaviour{
         AudioSystem.PlaySound(move);
         SetColor(pressedColor);
 
-#if UNITY_STANDALONE || UNITY_EDITOR
-        text.text = "> " + originText + " <";
-#endif
-        
+        text.text = GetModifiedText(originText);
     }
 
     //光标离开
@@ -175,11 +175,10 @@ public class UButton : MonoBehaviour{
     {
         if (this.disabled)
             return;
+
         actived = false;
         SetColor(normalColor);
-#if UNITY_WINDOWS || UNITY_EDITOR
         text.text = originText;
-#endif
     }
 
     //光标点击
@@ -187,9 +186,9 @@ public class UButton : MonoBehaviour{
     {
         if (this.disabled)
             return;
-
-        if(PointerClicked != null)
-            PointerClicked.Invoke();
+        
+        if (EventClicked != null)
+            EventClicked(this);
     }
 
     //TODO 为了进一步检测光标是否在按钮上
@@ -203,12 +202,6 @@ public class UButton : MonoBehaviour{
         text.color = color;
     }
 
-    public void SetText(string s)
-    {
-        if (string.IsNullOrEmpty(s))
-            return;
-        text.text = s;
-    }
 
     /// <summary>
     /// 设置按钮的激活状态（鼠标划过时的状态）
@@ -222,9 +215,41 @@ public class UButton : MonoBehaviour{
             OnPointerExit(null);
     }
 
+    /// <summary>
+    /// 手动触发 Click 事件
+    /// </summary>
     public void Click()
     {
         OnPointerDown(null);
         OnPointerUp(null);
+    }
+
+    /// <summary>
+    /// 获取当前选中项的值
+    /// </summary>
+    /// <returns>值</returns>
+    public object GetValue()
+    {
+        return values[currectChoice];
+    }
+
+    //取得下一个选项的 index
+    private int NextChoice()
+    {
+        currectChoice++;
+        if (currectChoice >= choices.Length)
+            currectChoice = 0;
+        originText = choices[currectChoice];
+        return currectChoice;
+    }
+
+    //取得加了修饰符的文本（> TEXT <）
+    private string GetModifiedText(string s)
+    {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+        return "> " + s + " <";
+#else
+        return s;
+#endif
     }
 }

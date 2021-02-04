@@ -61,19 +61,16 @@ public class DPadController : MonoBehaviour {
             buttonsDictionary.Add(btn.buttonType, btn);
         }
 
-
-        if (!GlobalStaic.useDPad)
-        {
-            SetDisplay(GlobalStaic.useDPad);
-            return;
-        }
+        useVibrator = GlobalSettings.settings.useVibrator;
+        SetDisplayRaw(GlobalSettings.settings.useDPad);
+        
 	}
 	
 	void Update () 
     {
         if (!SceneSystem.IsInGame)
         {
-            SetDisplay(false);
+            SetDisplayRaw(false);
             Destroy(gameObject);
         }
 	}
@@ -87,12 +84,9 @@ public class DPadController : MonoBehaviour {
             StartCoroutine(AsyncVibrate());
     }
 
-    /// <summary>
-    /// 隐藏或显示 DPad
-    /// </summary>
-    public void SetDisplay(bool display)
+
+    public void SetDisplayRaw(bool display)
     {
-        GlobalStaic.useDPad = display;
         this.displaying = display;
 
         foreach (DPadButton btn in buttons)
@@ -105,6 +99,15 @@ public class DPadController : MonoBehaviour {
             GlobalControls.SetInput(inputWrapper);
         else
             GlobalControls.SetInput(new KeyboardInput());
+    }
+
+    /// <summary>
+    /// 隐藏或显示 DPad
+    /// </summary>
+    public void SetDisplay(bool display)
+    {
+        SetDisplayRaw(displaying);
+        GlobalSettings.settings.useDPad = display;
     }
 
     /// <summary>

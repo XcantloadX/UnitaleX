@@ -3,7 +3,7 @@ using System.Collections;
 
 //https://gist.github.com/aVolpe/707c8cf46b1bb8dfb363
 /// <summary>
-/// Android Native 的振动
+/// Android 的 Native 振动
 /// </summary>
 public static class Vibration
 {
@@ -20,7 +20,7 @@ public static class Vibration
 
     public static void Vibrate()
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID
         if (isAndroid())
             vibrator.Call("vibrate");
         else
@@ -31,7 +31,7 @@ public static class Vibration
 
     public static void Vibrate(long milliseconds)
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID
         if (isAndroid())
             vibrator.Call("vibrate", milliseconds);
         else
@@ -42,7 +42,7 @@ public static class Vibration
 
     public static void Vibrate(long[] pattern, int repeat)
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID
         if (isAndroid())
             vibrator.Call("vibrate", pattern, repeat);
         else
@@ -64,7 +64,7 @@ public static class Vibration
     private static bool isAndroid()
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
-	return true;
+	    return true;
 #else
         return false;
 #endif
