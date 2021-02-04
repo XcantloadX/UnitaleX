@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FPSDisplay : MonoBehaviour
+public class FPSDisplay : AbstractDebugger
 {
     public float updateTime = 1f;
 
@@ -11,25 +11,19 @@ public class FPSDisplay : MonoBehaviour
     private float timer = 0;
     private float fps = 0;
     private float runTime = 0;
-    private static bool inited = false; //保证只有一个实例
+    private static bool inited = false;
 
     void Start()
     {
+        //保证只有一个实例
         if (inited)
             Destroy(gameObject);
-        inited = true;
-        GameObject.DontDestroyOnLoad(this);
-        DebugInfoScreen.instance.AddNewLine("Fps", 0);
-        DebugInfoScreen.instance.AddNewLine("Time", 0);
-
-        
     }
 
     void Update()
     {
         
         frames++;
-        //runTime += Time.;
         timer += Time.deltaTime;
 
         //计算 fps
@@ -50,5 +44,21 @@ public class FPSDisplay : MonoBehaviour
             DebugInfoScreen.instance.EditLine("Fps", fps);
 
         DebugInfoScreen.instance.EditLine("Time", System.Math.Round(Time.time, 1));
+    }
+
+    public override void Disable()
+    {
+        DebugInfoScreen.instance.RemoveLine("Fps");
+        DebugInfoScreen.instance.RemoveLine("Time");
+    }
+
+    public override void Enable()
+    {
+        if (inited)
+            return;
+        inited = true;
+        GameObject.DontDestroyOnLoad(this);
+        DebugInfoScreen.instance.AddNewLine("Fps", 0);
+        DebugInfoScreen.instance.AddNewLine("Time", 0);
     }
 }

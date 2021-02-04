@@ -2,19 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class LaterStart : MonoBehaviour {
-    private bool called = false;
+public abstract class AbstractDebugger : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        called = true;
-        LateStart();
-	}
+    /// <summary>
+    /// 尝试启用。如果在设置里禁用了此项，调用此方法将无效。
+    /// </summary>
+    public virtual void TryEnable()
+    {
+        Enable();
+    }
 
-    protected abstract void LateStart();
+    /// <summary>
+    /// 禁用
+    /// </summary>
+    public abstract void Disable();
+    /// <summary>
+    /// 启用
+    /// </summary>
+    public abstract void Enable();
+
+    /// <summary>
+    /// 根据设置尝试更新状态（启用或禁用）
+    /// </summary>
+    public virtual void TryUpdate()
+    {
+        
+    }
 }

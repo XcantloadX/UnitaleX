@@ -37,8 +37,20 @@ public class DebugInfoScreen : MonoBehaviour {
 
     private void CheckDebuggers()
     {
-        if (GlobalSettings.settings.noHit)
-            DebugNoHit.Enable();
+        AbstractDebugger[] debuggers = GameObject.FindObjectsOfType<AbstractDebugger>();
+        foreach (AbstractDebugger debugger in debuggers)
+        {
+            debugger.TryEnable();
+        }
+    }
+
+    public void UpdateDebuggers()
+    {
+        AbstractDebugger[] debuggers = GameObject.FindObjectsOfType<AbstractDebugger>();
+        foreach (AbstractDebugger debugger in debuggers)
+        {
+            debugger.TryUpdate();
+        }
     }
 	
 	void Update () 

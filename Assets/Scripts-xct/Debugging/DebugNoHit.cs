@@ -6,49 +6,48 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// 锁血模式
 /// </summary>
-public class DebugNoHit : MonoBehaviour
+public class DebugNoHit : AbstractDebugger
 {
     public static DebugNoHit instance = null;
 
     void Start()
     {
-        DebugInfoScreen.instance.AddNewLine("Hits", 0);
-        if (GlobalSettings.settings.debug)
-        {
-            DebugInfoScreen.instance.AddNewLine("NoHit", true);
-            GlobalSettings.settings.noHit = true;
-        }
+        GameObject.DontDestroyOnLoad(gameObject);
     }
 
     void Update()
     {
-        DebugInfoScreen.instance.EditLine("Hits", GlobalSettings.settings.hits + " (= -" + GlobalSettings.settings.totalHurtHP + " HP)");
+        if(GlobalSettings.settings.noHit)
+            DebugInfoScreen.instance.EditLine("Hits", GlobalSettings.settings.hits + " (= -" + GlobalSettings.settings.totalHurtHP + " HP)");
     }
 
-    void OnDisable()
+    public override void TryEnable()
     {
+        if (!GlobalSettings.settings.debug)
+            return;
+        else
+            Enable();
+    }
+
+    public override void Enable()
+    {
+        GlobalSettings.settings.noHit = true;
+        DebugInfoScreen.instance.AddNewLine("NoHit", true);
+        DebugInfoScreen.instance.AddNewLine("Hits", 0);
+    }
+
+    public override void Disable()
+    {
+        GlobalSettings.settings.noHit = false;
         DebugInfoScreen.instance.RemoveLine("NoHit");
         DebugInfoScreen.instance.RemoveLine("Hits");
     }
 
-    public static void Enable()
+    public override void TryUpdate()
     {
-        if (!GlobalSettings.settings.debug)
-        {
-            GlobalSettings.settings.noHit = false;
-            return;
-        }
-
-        GlobalSettings.settings.noHit = true;
-        GameObject obj = new GameObject("NoHitMode");
-        GameObject.DontDestroyOnLoad(obj);
-        instance = obj.AddComponent<DebugNoHit>();
-    }
-
-    public static void Disable()
-    {
-        GlobalSettings.settings.noHit = false;
-        if(instance != null)
-            GameObject.Destroy(instance.gameObject);
+        if (GlobalSettings.settings.noHit)
+            Enable();
+        else
+            Disable();
     }
 }

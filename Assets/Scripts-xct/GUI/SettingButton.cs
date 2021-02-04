@@ -42,10 +42,7 @@ public class SettingButton : MonoBehaviour {
         MakeEntryBool(x, ref y, "Enable Debug", GlobalSettings.settings.debug, delegate(UButton self) { GlobalSettings.settings.debug = (bool)self.GetValue(); });
         MakeEntryBool(x, ref y, "No Hit", GlobalSettings.settings.noHit, delegate(UButton self) {
             GlobalSettings.settings.noHit = (bool)self.GetValue();
-            if (GlobalSettings.settings.noHit)
-                DebugNoHit.Enable();
-            else
-                DebugNoHit.Disable();
+            DebugInfoScreen.instance.UpdateDebuggers();
         });
 
         
