@@ -18,12 +18,12 @@ public class DebugNoHit : AbstractDebugger
     void Update()
     {
         if(GlobalSettings.settings.noHit)
-            DebugInfoScreen.instance.EditLine("Hits", GlobalSettings.settings.hits + " (= -" + GlobalSettings.settings.totalHurtHP + " HP)");
+            DebugInfoScreen.instance.EditKVLine("Hits", GlobalSettings.settings.hits + " (= -" + GlobalSettings.settings.totalHurtHP + " HP)");
     }
 
     public override void TryEnable()
     {
-        if (!GlobalSettings.settings.debug)
+        if (!GlobalSettings.settings.debug || !GlobalSettings.settings.noHit)
             return;
         else
             Enable();
@@ -32,15 +32,15 @@ public class DebugNoHit : AbstractDebugger
     public override void Enable()
     {
         GlobalSettings.settings.noHit = true;
-        DebugInfoScreen.instance.AddNewLine("NoHit", true);
-        DebugInfoScreen.instance.AddNewLine("Hits", 0);
+        DebugInfoScreen.instance.NewKVLine("NoHit", true);
+        DebugInfoScreen.instance.NewKVLine("Hits", 0);
     }
 
     public override void Disable()
     {
         GlobalSettings.settings.noHit = false;
-        DebugInfoScreen.instance.RemoveLine("NoHit");
-        DebugInfoScreen.instance.RemoveLine("Hits");
+        DebugInfoScreen.instance.RemoveKVLine("NoHit");
+        DebugInfoScreen.instance.RemoveKVLine("Hits");
     }
 
     public override void TryUpdate()

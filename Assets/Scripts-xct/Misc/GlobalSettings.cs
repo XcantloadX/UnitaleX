@@ -26,6 +26,8 @@ public class GlobalSettings : MonoBehaviour {
         public bool useVibrator = true;
         public bool useCButton = false;
 
+        public bool autoRestartAfterGameOver = true;
+
         //-------InBattle--------
         public int hits = 0;
         public int totalHurtHP = 0;
@@ -39,13 +41,13 @@ public class GlobalSettings : MonoBehaviour {
             return;
         }
 
-        SETTINGS_FILE_PATH = FileLoader.DefaultDataPath + Path.DirectorySeparatorChar + "UserData" + Path.DirectorySeparatorChar + "settings.xml";
+        SETTINGS_FILE_PATH = FileLoader.DataRoot + Path.DirectorySeparatorChar + "UserData" + Path.DirectorySeparatorChar + "settings.xml";
         ins = this;
         inited = true;
 
         if (!File.Exists(SETTINGS_FILE_PATH))
         {
-            Directory.CreateDirectory(FileLoader.DefaultDataPath + Path.DirectorySeparatorChar + "UserData");
+            Directory.CreateDirectory(FileLoader.DataRoot + Path.DirectorySeparatorChar + "UserData");
             settings = new Settings();
             Save();
         }
@@ -84,5 +86,11 @@ public class GlobalSettings : MonoBehaviour {
         StreamReader ioReader = new StreamReader(path);
         settings = (Settings)reader.Deserialize(ioReader);
         ioReader.Close();
+    }
+
+    public static void Init()
+    {
+        GameObject obj = new GameObject("GlobalSettings");
+        obj.AddComponent<GlobalSettings>();
     }
 }

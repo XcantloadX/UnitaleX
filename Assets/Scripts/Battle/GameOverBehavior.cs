@@ -56,7 +56,8 @@ public class GameOverBehavior : MonoBehaviour {
     }
 
 	// Update is called once per frame
-	void Update () {
+    void Update()
+    {
         if (!started)
         {
             return;
@@ -158,25 +159,33 @@ public class GameOverBehavior : MonoBehaviour {
                 }
             }
         }
-        else if (exiting) 
+        else if (exiting)
         {
             // repurposing the timer as a reset delay
             gameOverFadeTimer -= Time.deltaTime;
             if (gameOverMusic.volume - Time.deltaTime > 0.0f)
             {
                 gameOverMusic.volume -= Time.deltaTime;
-            } else {
+            }
+            else
+            {
                 gameOverMusic.volume = 0.0f;
             }
 
             if (gameOverFadeTimer < -1.5f)
             {
-                //StaticInits.Reset();
-                GameObject.Destroy(this.gameObject);
-                //Application.LoadLevel("ModSelect");
-                Destroy(GameObject.Find("UICanvas"));
-                SceneSystem.Load(SceneSystem.BATTLE);
+                if (GlobalSettings.settings.autoRestartAfterGameOver)
+                {
+                    Destroy(GameObject.Find("UICanvas"));
+                    SceneSystem.Load(SceneSystem.BATTLE);
+                }
+                else
+                {
+                    StaticInits.Reset();
+                    Destroy(this.gameObject);
+                    Application.LoadLevel("ModSelect");
+                }
             }
         }
-	}
+    }
 }

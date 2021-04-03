@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <debug>false</debug>
+  <noHit>true</noHit>
+  <useDPad>false</useDPad>
+  <useVibrator>true</useVibrator>
+  <useCButton>false</useCButton>
+  <autoRestartAfterGameOver>true</autoRestartAfterGameOver>
+  <hits>0</hits>
+  <totalHurtHP>0</totalHurtHP>
+  <inBattleTime>0</inBattleTime>
+</Settings>

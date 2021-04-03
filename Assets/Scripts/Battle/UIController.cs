@@ -329,6 +329,7 @@ public class UIController : MonoBehaviour
 
             case UIState.DONE:
                 StaticInits.Reset();
+                GlobalSettings.ins.RestInBattleStats();
                 Application.LoadLevel("ModSelect");
                 break;
         }

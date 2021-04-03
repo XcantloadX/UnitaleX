@@ -15,14 +15,13 @@ public class FPSDisplay : AbstractDebugger
 
     void Start()
     {
-        //保证只有一个实例
-        if (inited)
-            Destroy(gameObject);
     }
 
     void Update()
     {
-        
+        if (!GlobalSettings.settings.debug)
+            return;
+
         frames++;
         timer += Time.deltaTime;
 
@@ -30,35 +29,33 @@ public class FPSDisplay : AbstractDebugger
         if(timer > updateTime)
         {
             fps = (float)Math.Round(frames / timer, 1);
-            DebugInfoScreen.instance.EditLine("Fps", fps);
+            DebugInfoScreen.instance.EditKVLine("Fps", fps);
 
             frames = 0;
             timer = 0;
         }
 
         if(fps < 10)
-            DebugInfoScreen.instance.EditLine("Fps", "<color=red>" + fps + " (May cause problem!)</color>");
+            DebugInfoScreen.instance.EditKVLine("Fps", "<color=red>" + fps + " (May cause problem!)</color>");
         else if(fps < 30)
-            DebugInfoScreen.instance.EditLine("Fps", "<color=yellow>" + fps + "</color>");
+            DebugInfoScreen.instance.EditKVLine("Fps", "<color=yellow>" + fps + "</color>");
         else
-            DebugInfoScreen.instance.EditLine("Fps", fps);
+            DebugInfoScreen.instance.EditKVLine("Fps", fps);
 
-        DebugInfoScreen.instance.EditLine("Time", System.Math.Round(Time.time, 1));
+        DebugInfoScreen.instance.EditKVLine("Time", System.Math.Round(Time.time, 1));
     }
 
     public override void Disable()
     {
-        DebugInfoScreen.instance.RemoveLine("Fps");
-        DebugInfoScreen.instance.RemoveLine("Time");
+        DebugInfoScreen.instance.RemoveKVLine("Fps");
+        DebugInfoScreen.instance.RemoveKVLine("Time");
     }
 
     public override void Enable()
     {
-        if (inited)
-            return;
         inited = true;
         GameObject.DontDestroyOnLoad(this);
-        DebugInfoScreen.instance.AddNewLine("Fps", 0);
-        DebugInfoScreen.instance.AddNewLine("Time", 0);
+        DebugInfoScreen.instance.NewKVLine("Fps", 0);
+        DebugInfoScreen.instance.NewKVLine("Time", 0);
     }
 }

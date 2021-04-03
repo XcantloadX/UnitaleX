@@ -24,6 +24,7 @@ public static class FileLoader
             else if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor)
             {
                 // everything is fine
+                SysDepDataRoot = "C:\\UnitaleX_Data";
             }
             else if(Application.platform == RuntimePlatform.Android)
             {

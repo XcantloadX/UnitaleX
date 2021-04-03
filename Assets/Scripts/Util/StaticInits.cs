@@ -66,9 +66,8 @@ public class StaticInits : MonoBehaviour
         PlayerCharacter.Reset();
 
         //防止内存泄露
-        
         SpriteRegistry.Clear();
-        AudioClipRegistry.Clear();
+        //AudioClipRegistry.Clear(); //TODO 这样会把说话声音搞坏，应该加个检测，保持默认 uifont 音效不被卸载
         ScriptRegistry.Clear();
         Resources.UnloadUnusedAssets();
         System.GC.Collect();

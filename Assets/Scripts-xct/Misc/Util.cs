@@ -27,9 +27,8 @@ public class Util
                     Directory.CreateDirectory(directoryName);
                 }
 
-                if (fileName != String.Empty)
+                if (fileName != String.Empty && Path.GetExtension(fileName) != ".meta") //TODO 修改写死的跳过 meta 文件
                 {
-                    Debug.Log("Unzipping: " + theEntry.Name + "|" + s.Length);
                     using (FileStream streamWriter = File.Create(Path.Combine(unzipTo, theEntry.Name)))
                     {
 

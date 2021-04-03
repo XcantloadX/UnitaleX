@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class SettingButton : MonoBehaviour {
 
     private GameObject uButton;
@@ -16,6 +17,11 @@ public class SettingButton : MonoBehaviour {
     {
         uButton = (GameObject)Resources.Load("Prefabs/UI/SettingsUButton");
         uLabel = (GameObject)Resources.Load("Prefabs/UI/SettingsULabel");
+
+#if UNITY_EDITOR
+        if (string.IsNullOrEmpty(SceneSystem.PreviousSceneName))
+            GlobalSettings.Init();
+#endif
 
         Init();
 	}
@@ -32,15 +38,19 @@ public class SettingButton : MonoBehaviour {
     {
         float y = 0, x = 45f;
 
-        MakeTitle(x, ref y, "DPad");
-        MakeEntryBool(x, ref y, "Show", GlobalSettings.settings.useDPad, delegate(UButton self) { GlobalSettings.settings.useDPad = (bool)self.GetValue(); });
-        MakeEntryBool(x, ref y, "Use C Button (MENU Button)", GlobalSettings.settings.useCButton, delegate(UButton self) { GlobalSettings.settings.useCButton = (bool)self.GetValue(); });
-        MakeEntryBool(x, ref y, "Use Vibrator", GlobalSettings.settings.useVibrator, delegate(UButton self) { GlobalSettings.settings.useVibrator = (bool)self.GetValue(); });
+        MakeTitle(x, ref y, "游戏");
+        MakeEntryBool(x, ref y, "失败后自动重新开始", GlobalSettings.settings.autoRestartAfterGameOver, delegate(UButton self) { GlobalSettings.settings.autoRestartAfterGameOver = (bool)self.GetValue(); });
         MakePadding(ref y);
 
-        MakeTitle(x, ref y, "Debug");
-        MakeEntryBool(x, ref y, "Enable Debug", GlobalSettings.settings.debug, delegate(UButton self) { GlobalSettings.settings.debug = (bool)self.GetValue(); });
-        MakeEntryBool(x, ref y, "No Hit", GlobalSettings.settings.noHit, delegate(UButton self) {
+        MakeTitle(x, ref y, "控制");
+        MakeEntryBool(x, ref y, "显示虚拟键盘", GlobalSettings.settings.useDPad, delegate(UButton self) { GlobalSettings.settings.useDPad = (bool)self.GetValue(); });
+        //MakeEntryBool(x, ref y, "使用 C 键 (菜单键)", GlobalSettings.settings.useCButton, delegate(UButton self) { GlobalSettings.settings.useCButton = (bool)self.GetValue(); });
+        MakeEntryBool(x, ref y, "使用震动", GlobalSettings.settings.useVibrator, delegate(UButton self) { GlobalSettings.settings.useVibrator = (bool)self.GetValue(); });
+        MakePadding(ref y);
+
+        MakeTitle(x, ref y, "调试");
+        MakeEntryBool(x, ref y, "启用调试", GlobalSettings.settings.debug, delegate(UButton self) { GlobalSettings.settings.debug = (bool)self.GetValue(); });
+        MakeEntryBool(x, ref y, "锁血", GlobalSettings.settings.noHit, delegate(UButton self) {
             GlobalSettings.settings.noHit = (bool)self.GetValue();
             DebugInfoScreen.instance.UpdateDebuggers();
         });

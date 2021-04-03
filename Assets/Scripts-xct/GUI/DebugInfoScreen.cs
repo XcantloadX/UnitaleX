@@ -9,30 +9,21 @@ using UnityEngine.UI;
 public class DebugInfoScreen : MonoBehaviour {
 
     public static DebugInfoScreen instance = null;
-    private List<string> lines = new List<string>(10);
     private Dictionary<string, object> infos = new Dictionary<string, object>(10);
-    private GUIStyle style = new GUIStyle();
+    private Dictionary<int, string> lines = new Dictionary<int, string>(10);
+    private GUIStyle style = null;
+    private System.Random rnd = new System.Random();
 
 	void Start()
     {
         if(instance != null) //保证单一实例
         {
-            Destroy(this);
+            Destroy(gameObject);
             return;
         }
 
         instance = this;
-        style.fontSize = 20;
-        style.normal.textColor = Color.white;
-        style.richText = true;
-
-        //TODO 这种方法没有透明度
-        //Texture2D t = new Texture2D(1, 1);
-        //t.SetPixel(0, 0, new Color(0, 0, 0, 10));
-        //t.Apply();
-        //style.normal.background = t;
         CheckDebuggers();
-        
 	}
 
     private void CheckDebuggers()
@@ -64,15 +55,25 @@ public class DebugInfoScreen : MonoBehaviour {
     {
         if (!GlobalSettings.settings.debug)
             return;
-        GUILayout.BeginArea(new Rect(0, 0, 400, Screen.height));
 
+        System.Text.StringBuilder sb = new System.Text.StringBuilder(10);
         foreach (KeyValuePair<string, object> kv in infos)
         {
-            GUILayout.Label(kv.Key + ": " + kv.Value, style);
+            sb.AppendLine(kv.Key + ": " + kv.Value);
+        }
+        sb.AppendLine();
+        foreach(KeyValuePair<int, string> kv in lines)
+        {
+            sb.AppendLine(kv.Value);
         }
 
+        style = GUI.skin.box;
+        style.fontSize = 20;
+        style.normal.textColor = Color.white;
+        style.richText = true;
+        style.alignment = TextAnchor.UpperLeft;
 
-        GUILayout.EndArea();
+        GUILayout.Box(sb.ToString(), style);
     }
 
     /// <summary>
@@ -80,9 +81,8 @@ public class DebugInfoScreen : MonoBehaviour {
     /// </summary>
     /// <param name="name">名称</param>
     /// <param name="value">值</param>
-    public void AddNewLine(string name, object value)
+    public void NewKVLine(string name, object value)
     {
-        //Debug.Log(name + "|" + infos.ContainsKey(name));
         if (infos.ContainsKey(name))
             return;
         infos.Add(name, value);
@@ -94,7 +94,7 @@ public class DebugInfoScreen : MonoBehaviour {
     /// <param name="name">名称</param>
     /// <param name="value">值</param>
     /// <param name="color">颜色</param>
-    public void EditLine(string name, object value)
+    public void EditKVLine(string name, object value)
     {
         infos[name] = value;
     }
@@ -103,8 +103,28 @@ public class DebugInfoScreen : MonoBehaviour {
     /// 移除一条信息
     /// </summary>
     /// <param name="name">名称</param>
-    public void RemoveLine(string name)
+    public void RemoveKVLine(string name)
     {
         infos.Remove(name);
+    }
+
+    public int NewLine(string text)
+    {
+        int id = rnd.Next();
+        lines.Add(id, text);
+        return id;
+    }
+
+    public void EditLine(int id, string text)
+    {
+        if (!lines.ContainsKey(id))
+            return;
+        lines[id] = text;
+    }
+
+    public void RemoveLine(int id)
+    {
+        if (lines.ContainsKey(id))
+            lines.Remove(id);
     }
 }

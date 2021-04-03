@@ -5,80 +5,98 @@ using UnityEngine.UI;
 using System.IO;
 using System;
 
-/// <summary>
-/// 检查并下载 Default 数据
-/// </summary>
-public class DefaultDataDownloader : MonoBehaviour
+namespace UnitaleX.Network
 {
-    public Text tip; //提示
-    public bool downloadWithoutChecking = false;
-    private float downloadPercent = 0f;
-    private const string LINK = "http://zl.lovezr.cn/api/Default.zip";
-    private WaitingScreen screen;
-
-    void Start()
-    {
-        DontDestroyOnLoad(gameObject);
-        if (!CheckDefaultFiles() || downloadWithoutChecking)
-            WaitingScreen.LoadWaitingScreen(delegate() {
-                StartCoroutine(DownloadData(LINK, Path.Combine(FileLoader.DataRoot, "temp.zip"))); 
-            });
-        else
-            Destroy(gameObject);
-    }
-
     /// <summary>
-    /// 检查 Default 数据是否已下载
+    /// 检查并下载 Default 数据
     /// </summary>
-    /// <returns></returns>
-    private bool CheckDefaultFiles()
+    public class DefaultDataDownloader : MonoBehaviour
     {
-        bool flag = Directory.Exists(FileLoader.DefaultDataPath);
-        if (!flag)
-            Debug.LogWarning("DefaultData missing!(" + FileLoader.DefaultDataPath + ")");
-        return flag;
-    }
+        public Text tip; //提示
+        public bool downloadWithoutChecking = false;
+        private float downloadPercent = 0;
+        private WaitingScreen screen;
 
-    private IEnumerator DownloadData(string url, string downloadTo)
-    {
-        screen = WaitingScreen.Instance;
-        Debug.Log("Started file downloading from " + url);
-        WWW www = new WWW(url);
-        while (!www.isDone)
+        void Start()
         {
+            DontDestroyOnLoad(gameObject);
+#if UNITY_EDITOR
+            if (!CheckDefaultFiles() || downloadWithoutChecking)
+#else
+            if (!CheckDefaultFiles())
+#endif
+                WaitingScreen.LoadWaitingScreen(delegate()
+                {
+                    try
+                    {
+                        StartCoroutine(DownloadData(Path.Combine(FileLoader.DataRoot, "temp.zip")));
+                    }
+                    catch (System.Exception ex)
+                    {
+                        WaitingScreen.Instance.SetText("<color=red>" + ex.ToString() + "</color>");
+                        throw ex;
+                    }
+
+                });
+            else
+                Destroy(gameObject);
+        }
+
+        /// <summary>
+        /// 检查 Default 数据是否已下载
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckDefaultFiles()
+        {
+            bool flag = Directory.Exists(FileLoader.DefaultDataPath) && Directory.Exists(Path.Combine(FileLoader.DefaultDataPath, "Sprites"));
+            if (!flag)
+                Debug.Log("DefaultData not found at " + FileLoader.DefaultDataPath + ". Try to download.");
+            return flag;
+        }
+
+        private IEnumerator DownloadData(string downloadTo)
+        {
+            //获取下载连接
+            WaitingScreen.Instance.SetText("正在连接服务器...");
+            yield return null; //等待一帧，让提示显示出来
+            string url = NetworkAPI.GetDefaultDataUrl();
+            if (string.IsNullOrEmpty(url))
+                throw new Exception("链接为空");
+
+            screen = WaitingScreen.Instance;
+            Debug.Log("Started file downloading from " + url);
+            WWW www = new WWW(url);
+            while (!www.isDone)
+            {
+                downloadPercent = www.progress;
+                screen.SetText("正在下载数据文件： " + System.Math.Round(downloadPercent, 2) * 100 + " %");
+                yield return null;
+            }
             downloadPercent = www.progress;
-            screen.SetText("正在下载数据文件： " + System.Math.Round(downloadPercent, 2) * 100 + " %");
-            yield return null;
-        }
-        downloadPercent = www.progress;
-        byte[] buffer = www.bytes;
+            byte[] buffer = www.bytes;
 
-        try
-        {
-            //tip.text = "下载已完成，正在解压..."; //没必要，显示不出来
-            Util.Unzip(FileLoader.DataRoot, buffer);
-            screen.SetText("解压完成，请重启游戏");
-        }
-        catch (Exception e)
-        {
-            screen.SetText("<color=red>发生错误：" + "\n" + e.Message + "</color>");
-        }
-        finally
-        {
-            //删除临时文件
-            try { File.Delete(downloadTo); }
-            catch { }
+            try
+            {
+                if (!Directory.Exists(FileLoader.DefaultDataPath))
+                    Directory.CreateDirectory(FileLoader.DefaultDataPath);
 
-            Destroy(gameObject);
+                Util.Unzip(FileLoader.DefaultDataPath, buffer);
+                screen.SetText("解压完成，请重启游戏");
+            }
+            catch (Exception e)
+            {
+                screen.SetText("<color=red>发生错误：" + "\n" + e.Message + "\nTrace: " + e.StackTrace + "</color>");
+            }
+            finally
+            {
+                //删除临时文件
+                try { File.Delete(downloadTo); }
+                catch { }
+
+                Destroy(gameObject);
+            }
+
         }
-
-    }
-
-    //TODO 分离此方法到单独的类里面
-    public string HttpGetString(string url)
-    {
-        WWW www = new WWW(url);
-        while (!www.isDone) { };
-        return System.Text.Encoding.Default.GetString(www.bytes);
     }
 }
+

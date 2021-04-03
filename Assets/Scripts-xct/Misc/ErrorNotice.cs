@@ -9,6 +9,7 @@ public class ErrorNotice : MonoBehaviour
 {
     private string errMsg = "";
     private float timer = 0;
+    private int id = 0;
 
     // Use this for initialization
     void Start()
@@ -22,6 +23,11 @@ public class ErrorNotice : MonoBehaviour
     {
         if(timer >= 0)
             timer -= Time.deltaTime;
+
+        if(timer <= 0)
+        {
+            DebugInfoScreen.instance.RemoveLine(id);
+        }
     }
 
     void OnGUI()
@@ -34,16 +40,18 @@ public class ErrorNotice : MonoBehaviour
             style.normal.textColor = Color.red;
             style.wordWrap = true; //自动换行
             
-            GUI.Label(new Rect(0, Screen.height - 40, Screen.width, 40), "错误：" + errMsg, style);
+            //GUI.Label(new Rect(0, Screen.height - 40, Screen.width, 40), "错误：" + errMsg, style);
+            //GUILayout.Label("错误：" + errMsg, style);
         }
     }
 
     private void Handle(string logString, string stackTrace, LogType type)
     {
-        if (type == LogType.Error || type == LogType.Exception)
+        if ((type == LogType.Error || type == LogType.Exception) && timer <= 0)
         {
-            errMsg = logString;
+            errMsg = logString + "\n" + stackTrace;
             timer = 6f;
+            id = DebugInfoScreen.instance.NewLine("<color=red>" + errMsg + "</color>");
         }
     }
 }

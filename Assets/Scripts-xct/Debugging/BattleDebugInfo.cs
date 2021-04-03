@@ -28,13 +28,13 @@ public class BattleDebugInfo : MonoBehaviour {
         belowArenaLayer = GameObject.Find("BelowArenaLayer");
         bulletPool = GameObject.Find("BulletPool");
 
-        DebugInfoScreen.instance.AddNewLine(BULLET_NUM, 0);
-        DebugInfoScreen.instance.AddNewLine(LUASPR_NUM, 0);
+        DebugInfoScreen.instance.NewKVLine(BULLET_NUM, 0);
+        DebugInfoScreen.instance.NewKVLine(LUASPR_NUM, 0);
         
 
         for (int i = 0; i < enemies.Length; i++)
         {
-            DebugInfoScreen.instance.AddNewLine(ENEMY_HP + i.ToString(), 0);
+            DebugInfoScreen.instance.NewKVLine(ENEMY_HP + i.ToString(), 0);
         }
 
         SceneManager.activeSceneChanged += delegate(Scene oldScene, Scene newScene) {
@@ -46,11 +46,11 @@ public class BattleDebugInfo : MonoBehaviour {
 	
     private void Hide()
     {
-        DebugInfoScreen.instance.RemoveLine(BULLET_NUM);
-        DebugInfoScreen.instance.RemoveLine(LUASPR_NUM);
+        DebugInfoScreen.instance.RemoveKVLine(BULLET_NUM);
+        DebugInfoScreen.instance.RemoveKVLine(LUASPR_NUM);
         for (int i = 0; i < enemies.Length; i++)
         {
-            DebugInfoScreen.instance.RemoveLine(ENEMY_HP + i.ToString());
+            DebugInfoScreen.instance.RemoveKVLine(ENEMY_HP + i.ToString());
         }
     }
 
@@ -58,12 +58,12 @@ public class BattleDebugInfo : MonoBehaviour {
 	void Update () {
         if(enabled)
         {
-            DebugInfoScreen.instance.EditLine(BULLET_NUM, GetActiveChildCount(bulletPool.transform));
-            DebugInfoScreen.instance.EditLine(LUASPR_NUM, belowArenaLayer.transform.childCount);
+            DebugInfoScreen.instance.EditKVLine(BULLET_NUM, GetActiveChildCount(bulletPool.transform));
+            DebugInfoScreen.instance.EditKVLine(LUASPR_NUM, belowArenaLayer.transform.childCount);
 
             for (int i = 0; i < enemies.Length; i++)
             {
-                DebugInfoScreen.instance.EditLine(ENEMY_HP + i.ToString(), enemies[i].HP);
+                DebugInfoScreen.instance.EditKVLine(ENEMY_HP + i.ToString(), enemies[i].HP);
             }
         }
 

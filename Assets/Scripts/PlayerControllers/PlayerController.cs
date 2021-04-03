@@ -128,8 +128,12 @@ public class PlayerController : MonoBehaviour
     {
         if (GlobalSettings.settings.noHit && damage > 0)
         {
-            GlobalSettings.settings.hits++;
-            GlobalSettings.settings.totalHurtHP += damage;
+            if (invulTimer <= 0)
+            {
+                GlobalSettings.settings.hits++;
+                GlobalSettings.settings.totalHurtHP += damage;
+                invulTimer = invulnerabilitySeconds;
+            }
             return;
         }
         

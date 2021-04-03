@@ -120,7 +120,7 @@ PlayerSettings:
     16:10: 0
     16:9: 0
     Others: 0
-  bundleVersion: beta 0.2.1
+  bundleVersion: 0.2.1.1
   preloadedAssets: []
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -145,7 +145,7 @@ PlayerSettings:
     tvOS: com.Company.ProductName
   buildNumber:
     iOS: 0
-  AndroidBundleVersionCode: 3
+  AndroidBundleVersionCode: 4
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -548,6 +548,7 @@ PlayerSettings:
     iOS: 0
   additionalIl2CppArgs: 
   apiCompatibilityLevelPerPlatform:
+    Android: 2
     Standalone: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1

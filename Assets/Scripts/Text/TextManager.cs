@@ -418,11 +418,11 @@ public class TextManager : MonoBehaviour
         switch (cmds[0].ToLower())
         {
             case "w":
-                letterTimer = timePerLetter - (singleFrameTiming * ParseUtil.getInt(cmds[1]));
+                letterTimer = timePerLetter - (singleFrameTiming * ParseUtil.getFloat(cmds[1]));
                 break;
 
             case "waitall":
-                timePerLetter = singleFrameTiming * ParseUtil.getInt(cmds[1]);
+                timePerLetter = singleFrameTiming * ParseUtil.getFloat(cmds[1]);
                 break;
 
             case "voice":

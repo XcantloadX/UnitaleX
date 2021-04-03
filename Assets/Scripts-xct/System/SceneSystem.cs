@@ -118,4 +118,20 @@ public class SceneSystem : MonoBehaviour
             Load(fallback);
     }
 
+    public static void ExitFromGameOverTo(string scene)
+    {
+        StaticInits.Reset();
+        GameOverBehavior obj = GameObject.FindObjectOfType<GameOverBehavior>();
+        if (obj != null)
+            GameObject.Destroy(obj.gameObject);
+        GlobalSettings.ins.RestInBattleStats();
+        Load(scene);
+    }
+
+    public static void ExitFromBattleTo(string name)
+    {
+        StaticInits.Reset();
+        GlobalSettings.ins.RestInBattleStats();
+        Load(name);
+    }
 }
